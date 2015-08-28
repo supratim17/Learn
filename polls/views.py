@@ -13,16 +13,22 @@ def index(request):
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
-
+'''
 def results(request, question_id):
-   	response = "You're looking at the results of question %s."
-    try: 
-	    p = get_object_or_404(Question, pk=question_id)
-	    return HttpResponse(str(p.choice_set))
+	return HttpResponse("Results")
+
+'''
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    try:
+        question = get_object_or_404(Question, pk=question_id)
+        context = {'question': question}
+        return render(request, 'polls/vote.html', context)
     except Question.DoesNotExist:
-	    return 0	
-    
-    #return HttpResponse(response % question_id)
+        return render(request, 'polls/detail.html', {
+            'question': p,
+            'error_message': "You didn't select a choice.",
+        })
 
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
