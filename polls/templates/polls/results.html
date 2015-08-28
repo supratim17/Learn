@@ -1,0 +1,27 @@
+<!--{% if question %}
+	<h1>{{ question.question_text }}</h1>
+    <table border="1px solid">
+	<thead>
+    	<td>Choices</td>
+    	<td>Total votes</td>
+   	</thead>
+    {% for choice in question.choice_set.all %}
+        <tr>
+        	<td>{{ choice.choice_text }}</td>
+        	<td>{{ choice.votes }}</td>
+       	</tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+-->
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
