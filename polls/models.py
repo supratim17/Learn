@@ -9,7 +9,11 @@ class Question(models.Model):
         return self.question_text
 
     def diff(self):
-    	return str((timezone.now() - (self.pub_date)).seconds/60)+" minutes ago"
+        ago = (timezone.now() - (self.pub_date)).seconds/60
+        if(ago<0):
+            ago = 0-ago
+            return "-"+str(ago)+" minutes later"
+    	return str(ago)+" minutes ago"
     
     diff.short_description = 'Last Modified'
 
